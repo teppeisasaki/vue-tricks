@@ -28,7 +28,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Pages
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: v16.13.1
@@ -37,7 +37,11 @@ jobs:
         run: npm ci
       - name: Create artifact
         run: npm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@v1
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          path: './dist'
+        path: './dist'
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
